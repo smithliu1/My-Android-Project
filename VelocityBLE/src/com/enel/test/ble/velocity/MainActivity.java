@@ -166,11 +166,13 @@ public class MainActivity extends Activity {
 	private int programflag = 0;
 	private ProgressBar bar;
 
-	private int overtime = 3000;
+	private int overtime = 2000;
 	private long initProgrmasTime = 0;
 	private Message message;
 	private int modulenum = 0;
 	private boolean isapp = true;
+	private Handler han = new Handler();
+	private int overtimecount = 0;
 	// 进度条
 	@SuppressLint("HandlerLeak")
 	private Handler mhandler = new Handler() {
@@ -238,7 +240,34 @@ public class MainActivity extends Activity {
 		checkFeatureBLE();
 		initView();
 		initValue();
+		han.postDelayed(mrun, 1000);
 	}
+
+	Runnable mrun = new Runnable() {
+
+		@Override
+		public void run() {
+			if ((getmillisecond() - mmmtime > overtime) && progress < 100) {
+				Log.i(TAG, "超时");
+				write("module:  " + getModuleName(modulenum) + "  Time:" + getCurrentTime() + "\n" + "status:  " + "超时"
+						+ "-----count：" + overtimecount + "\n", getday() + ".txt");
+				write("current progress:" + progress + "    ,flash degree:" + runcount + "\n", getday() + ".txt");
+				write("==============================================" + "\n", getday() + ".txt");
+				Log.i(TAG, "request node success");
+				countlength = 0;
+				flag = 1;
+				runcount = 1;
+				progress = 0;
+				overtimecount++;
+				byte[] value = configCmd(modulenode, REQ_STATUS, null);
+				sendCmd(value);
+				han.postDelayed(this, 1000);
+			} else {
+				Log.i(TAG, "没有超时");
+				han.postDelayed(this, 1000);
+			}
+		}
+	};
 
 	@Override
 	protected void onResume() {
@@ -813,15 +842,15 @@ public class MainActivity extends Activity {
 					public void run() {
 						try {
 							try {
-								if (countlength < 200) {
-									if (progress == 1) {
-										write("module:  " + getModuleName(modulenum) + "  Time:" + getCurrentTime()
-												+ "\n" + "status:  " + "烧写开始" + "\n", getday() + ".txt");
-										write("current progress:" + progress + "    ,flash degree:" + runcount + "\n",
-												getday() + ".txt");
-										write("==============================================" + "\n",
-												getday() + ".txt");
-									}
+
+								if (progress == 1) {
+									write("module:  " + getModuleName(modulenum) + "  Time:" + getCurrentTime() + "\n"
+											+ "status:  " + "烧写开始" + "\n", getday() + ".txt");
+									write("current progress:" + progress + "    ,flash degree:" + runcount + "\n",
+											getday() + ".txt");
+									write("==============================================" + "\n", getday() + ".txt");
+								}
+								if (countlength < spare.size()) {
 									byte[] value = generateCmd(modulenode, REQ_PROGRAM, spare.get(countlength));
 									countlength++;
 									sendCmd(value);
@@ -834,6 +863,7 @@ public class MainActivity extends Activity {
 									message.arg1 = progress;
 									mhandler.sendMessage(message);
 								}
+
 							} catch (Exception e) {
 								mcount++;
 								write("module:  " + getModuleName(modulenum) + "  Time:" + getCurrentTime() + "\n"
@@ -860,6 +890,7 @@ public class MainActivity extends Activity {
 							sendCmd(value);
 							flag = 5;
 						}
+						runcount++;
 					}
 				}).start();
 			} else if (programflag == 3) {
@@ -907,6 +938,7 @@ public class MainActivity extends Activity {
 							sendCmd(value);
 							flag = 5;
 						}
+						runcount++;
 					}
 				}).start();
 
