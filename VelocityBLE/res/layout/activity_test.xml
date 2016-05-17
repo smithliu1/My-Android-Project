@@ -1,0 +1,119 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_horizontal_margin" >
+
+    <TextView
+        android:id="@+id/lblConnStatus"
+        style="@style/lbl_content_style_1"
+        android:text="@string/lbl_state" />
+
+    <View
+        style="@style/view_style"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/lblInfo"
+        style="@style/lbl_content_style_3"
+        android:text="@string/lbl_info"
+        android:visibility="gone" />
+
+    <LinearLayout
+        style="@style/layout_style"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/lblMaxTime"
+            style="@style/lbl_content_style_2"
+            android:text="@string/lbl_time_max" />
+
+        <TextView
+            android:id="@+id/lblMinTime"
+            style="@style/lbl_content_style_2"
+            android:text="@string/lbl_time_min" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/lblStartTime"
+        style="@style/lbl_content_style_3"
+        android:text="@string/lbl_time_start"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/lblEndTime"
+        style="@style/lbl_content_style_3"
+        android:text="@string/lbl_time_stop"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/lblLost"
+        style="@style/lbl_content_style_3"
+        android:text="@string/lbl_lost"
+        android:visibility="gone" />
+
+    <View
+        style="@style/view_style"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/lblTimeZone"
+        style="@style/lbl_content_style_4"
+        android:text="@string/lbl_zone_content"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/activity_modulename"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <ListView
+        android:id="@+id/activity_tv_show"
+        style="@style/lbl_content_style_5"
+        android:visibility="gone" />
+
+    <!-- android:entries="@array/list_Module" -->
+
+    <Button
+        android:id="@+id/btnStart"
+        style="@style/btn_style"
+        android:text="@string/btn_start"
+        android:visibility="gone" />
+
+    <ProgressBar
+        android:id="@+id/activity_program"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <TextView
+            android:id="@+id/activity_tv_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:text="" />
+
+        <Button
+            android:id="@+id/activity_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="30dp"
+            android:onClick="onClick"
+            android:text="look program log information"
+            android:visibility="visible" />
+    </RelativeLayout>
+
+</LinearLayout>
